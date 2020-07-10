@@ -1,39 +1,38 @@
 import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Box from "@material-ui/core/Box";
-
-import Typography from "@material-ui/core/Typography";
+const list = [];
 
 function App() {
-  const [value, setValue] = useState(1);
+  const [text, setText] = useState("");
+  const [listValue, setListValue] = useState([]);
+  const handleChange = (e) => {
+    setText(e.target.value);
+  };
+  const handleClick = (e) => {
+    setListValue(listValue.concat(text));
+    setText("");
+  };
 
-  const handleAddClick = () => {
-    setValue(value + 1);
-  };
-  const handleSubtractClick = () => {
-    setValue(value - 1);
-  };
   return (
     <div>
-      <Container maxWidth="sm">
-        <Typography variant="h1" gutterBottom>
-          {value}
-        </Typography>
-        <Button variant="outlined" color="primary" onClick={handleAddClick}>
-          Add
-        </Button>
-        <Box m={1} />
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={handleSubtractClick}
-        >
-          Subtract
-        </Button>
-      </Container>
+      <TextField
+        onChange={handleChange}
+        id="outlined-basic"
+        label="Outlined"
+        variant="outlined"
+        value={text}
+      />
+      <Button onClick={handleClick} variant="contained" color="secondary">
+        Submit
+      </Button>
+      <ul>
+        {listValue.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 }
